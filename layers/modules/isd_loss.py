@@ -39,8 +39,10 @@ class ISDLoss(nn.Module):
         right_mask_val = right_mask_val.data
 
         ## both background elimination
-        only_left_mask_val = left_mask_val * (1 - right_mask_val)
-        only_right_mask_val = right_mask_val * (1 - left_mask_val)
+        only_left_mask_val = left_mask_val.float() * (1 - right_mask_val.float())
+        only_right_mask_val = right_mask_val.float() * (1 - left_mask_val.float())
+        only_left_mask_val = only_left_mask_val.bool()
+        only_right_mask_val = only_right_mask_val.bool()
 
         intersection_mask_val = left_mask_val * right_mask_val
 
