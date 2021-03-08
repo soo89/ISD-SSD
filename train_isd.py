@@ -42,12 +42,16 @@ parser.add_argument('--start_iter', default=0, type=int,
                     help='Resume training at this iter')
 parser.add_argument('--num_workers', default=4, type=int,
                     help='Number of workers used in dataloading')
+parser.add_argument('--beta_dis', default=100.0, type=float,
+                    help='beta distribution')
 parser.add_argument('--cuda', default=True, type=str2bool,
                     help='Use CUDA to train model')
 parser.add_argument('--lr', '--learning-rate', default=1e-3, type=float,
                     help='initial learning rate')
 parser.add_argument('--momentum', default=0.9, type=float,
                     help='Momentum value for optim')
+parser.add_argument('--type1coef', default=0.0001, type=float,
+                    help='type1coef')
 parser.add_argument('--weight_decay', default=5e-4, type=float,
                     help='Weight decay for SGD')
 parser.add_argument('--gamma', default=0.1, type=float,
@@ -233,7 +237,7 @@ def train():
             images_shuffle[:int(args.batch_size / 2), :, :, :] = images_flip[int(args.batch_size / 2):, :, :, :]
             images_shuffle[int(args.batch_size / 2):, :, :, :] = images_flip[:int(args.batch_size / 2), :, :, :]
 
-            lam = np.random.beta(5.0, 5.0)
+            lam = np.random.beta(args.beta_dis, args.beta_dis)
 
 
             images_mix = lam * images.clone() + (1 - lam) * images_shuffle.clone()
@@ -285,7 +289,7 @@ def train():
             consistency_loss = csd_criterion(args, conf, conf_flip, loc, loc_flip, conf_consistency_criterion)
             interpolation_consistency_conf_loss, fixmatch_loss = isd_criterion(args, lam, conf, conf_flip, loc, loc_flip, conf_shuffle, conf_interpolation, loc_shuffle, loc_interpolation, conf_consistency_criterion)
             consistency_loss = consistency_loss.mean()
-            interpolation_loss = torch.mul(interpolation_consistency_conf_loss.mean(), 0.1) + fixmatch_loss.mean()
+            interpolation_loss = torch.mul(interpolation_consistency_conf_loss.mean(), args.type1coef) + fixmatch_loss.mean()
 
 
             ramp_weight = rampweight(iteration)
@@ -342,17 +346,17 @@ def train():
 
 
 def rampweight(iteration):
-    ramp_up_end = 64000
-    ramp_down_start = 220000
+    ramp_up_end = 32000
+    ramp_down_start = 100000
     coef = 1
 
     if(iteration<ramp_up_end):
         ramp_weight = math.exp(-5 * math.pow((1 - iteration / ramp_up_end),2))
     elif(iteration>ramp_down_start):
-        ramp_weight = math.exp(-12.5 * math.pow((1 - (240000 - iteration) / 20000),2)) 
+        ramp_weight = math.exp(-12.5 * math.pow((1 - (120000 - iteration) / 20000),2))
 #        ramp_weight = math.exp(-12.5 * math.pow((1 - (120000 - iteration) / 20000),2))
     else:
-        ramp_weight = 1 
+        ramp_weight = 1  
 
 
     if(iteration==0):
