@@ -50,7 +50,7 @@ parser.add_argument('--lr', '--learning-rate', default=1e-3, type=float,
                     help='initial learning rate')
 parser.add_argument('--momentum', default=0.9, type=float,
                     help='Momentum value for optim')
-parser.add_argument('--type1coef', default=0.0001, type=float,
+parser.add_argument('--type1coef', default=0.1, type=float,
                     help='type1coef')
 parser.add_argument('--weight_decay', default=5e-4, type=float,
                     help='Weight decay for SGD')
