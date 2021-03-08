@@ -11,7 +11,7 @@ We experimented with ISD using the SSD pytorch framework. To use our model, comp
 
 #### prerequisites
 - Python 3.6
-- Pytorch 1.0.0
+- Pytorch 1.5.0
 
 ## Supervised learning
 ```Shell
