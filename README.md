@@ -1,6 +1,6 @@
 # ISD: Interpolation-based Semi-supervised learning for object Detection (CVPR 2021)
 
-By [Jisoo Jeong](http://mipal.snu.ac.kr/index.php/Jisoo_Jeong), [Vikas Verma](https://scholar.google.co.kr/citations?user=wo_M4uQAAAAJ&hl=en&oi=ao), [Minsung Hyun](http://mipal.snu.ac.kr/index.php/MinSung_Hyun), [Juho Kannala](https://users.aalto.fi/~kannalj1/), [Nojun Kwak](http://mipal.snu.ac.kr/index.php/Nojun_Kwak)
+By [Jisoo Jeong](http://mipal.snu.ac.kr/index.php/Jisoo_Jeong), [Vikas Verma](https://scholar.google.co.kr/citations?user=wo_M4uQAAAAJ&hl=en&oi=ao), [Minsung Hyun](https://scholar.google.com/citations?user=MpsUp10AAAAJ&hl=ko&oi=ao), [Juho Kannala](https://users.aalto.fi/~kannalj1/), [Nojun Kwak](http://mipal.snu.ac.kr/index.php/Nojun_Kwak)
 
 
 #### For more details, please refer to our [arXiv paper](https://arxiv.org/abs/2006.02158)
