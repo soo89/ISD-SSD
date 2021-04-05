@@ -32,8 +32,8 @@ class ISDLoss(nn.Module):
         left_mask_val = left_mask_val.data
 
         ## flip background elimination
-        right_conf_class = conf_shuffle[:, :, 1:].clone()
-        right_background_score = conf_shuffle[:, :, 0].clone()
+        right_conf_class = conf_temp[:, :, 1:].clone()
+        right_background_score = conf_temp[:, :, 0].clone()
         right_each_val, right_each_index = torch.max(right_conf_class, dim=2)
         right_mask_val = right_each_val > right_background_score
         right_mask_val = right_mask_val.data
